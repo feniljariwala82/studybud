@@ -1,0 +1,23 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}
+Delete
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'rooms.delete' id %}" method="post">
+    {% csrf_token %}
+    <div class="card mt-4">
+        <div class="row p-4">
+            <div class="col">
+                <p>
+                    Are you sure you want to delete <strong> {{ item_name }} </strong> {{ item_type }}?
+                </p>
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a href="{{request.META.HTTP_REFERER}}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+

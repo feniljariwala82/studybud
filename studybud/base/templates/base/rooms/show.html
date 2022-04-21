@@ -1,0 +1,17 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+Show
+{% endblock title %}
+
+{% block content %}
+
+{% if selected_room %}
+{{ selected_room.name }}
+<br/>
+{{ selected_room.description }}
+{% else %}
+Room not found!
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block content-fluid %}
+<div class="row justify-content-start mt-4">
+
+    <div class="col col-sm-6 col-md-2">
+        <div class="row">
+            <h4>Browse Topics</h4>
+            <hr>
+        </div>
+
+        <div class="row">
+            <a href="{% url 'home.index' %}">
+                <h4>Refresh</h4>
+            </a>
+        </div>
+
+        {% for topic in topics %}
+        <div class="row">
+            <a href="{% url 'home.index' %}?topic={{topic.name}}">
+                <h4>{{ topic.name }}</h4>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col col-sm-6 col-md-10">
+
+        <h5>{{room_count}} rooms found near you</h5>
+
+        <div class="row justify-content-start">
+            {% for room in rooms %}
+            <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3 mt-2">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ room.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Created by: {{ room.host.username }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Topic: {{ room.topic }}</h6>
+                        <p class="card-text">{{ room.description }}</p>
+                        <a href="{% url 'rooms.show' room.id %}" class="card-link">Show</a>
+                        {% if request.user == room.host and request.user.is_authenticated %}
+                        <a href="{% url 'rooms.edit' room.id %}" class="card-link">Edit</a>
+                        <a href="{% url 'rooms.delete' room.id %}" class="card-link">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col">
+                <h4>No rooms found!</h4>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content-fluid %}
